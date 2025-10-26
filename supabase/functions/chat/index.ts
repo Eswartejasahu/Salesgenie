@@ -58,7 +58,7 @@ serve(async (req) => {
       .from('products')
       .select('*');
 
-    const systemPrompt = `You are an intelligent AI sales assistant. Your role is to:
+const systemPrompt = `You are Vikasit, an intelligent AI sales assistant. Your role is to:
 1. Understand customer needs and pain points
 2. Recommend relevant products from our catalog
 3. Capture lead information (name, email, phone) naturally in conversation

@@ -38,6 +38,47 @@ export type Database = {
         }
         Relationships: []
       }
+      emotion_analysis: {
+        Row: {
+          confidence: number
+          conversation_id: string | null
+          created_at: string
+          emotion: string
+          engagement_score: number
+          facial_data: Json | null
+          id: string
+          timestamp: string
+        }
+        Insert: {
+          confidence: number
+          conversation_id?: string | null
+          created_at?: string
+          emotion: string
+          engagement_score?: number
+          facial_data?: Json | null
+          id?: string
+          timestamp?: string
+        }
+        Update: {
+          confidence?: number
+          conversation_id?: string | null
+          created_at?: string
+          emotion?: string
+          engagement_score?: number
+          facial_data?: Json | null
+          id?: string
+          timestamp?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "emotion_analysis_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       leads: {
         Row: {
           conversation_id: string | null

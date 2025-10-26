@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { ChatInterface } from "@/components/ChatInterface";
 import { ProductCard } from "@/components/ProductCard";
 import { AnalyticsDashboard } from "@/components/AnalyticsDashboard";
+import { LeadScoring } from "@/components/LeadScoring";
 import { supabase } from "@/integrations/supabase/client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -60,6 +61,9 @@ const Index = () => {
             <TabsTrigger value="products" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               Products
             </TabsTrigger>
+            <TabsTrigger value="leads" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              Lead Scoring
+            </TabsTrigger>
             <TabsTrigger value="analytics" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               Analytics
             </TabsTrigger>
@@ -104,6 +108,10 @@ const Index = () => {
                 />
               ))}
             </div>
+          </TabsContent>
+
+          <TabsContent value="leads">
+            <LeadScoring />
           </TabsContent>
 
           <TabsContent value="analytics">

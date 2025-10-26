@@ -121,6 +121,40 @@ ${visitorName ? `Customer's name: ${visitorName}` : 'Get their name early in the
       content: assistantMessage,
     });
 
+    // Try to extract and store lead information
+    const emailRegex = /[\w.-]+@[\w.-]+\.\w+/;
+    const phoneRegex = /[\d\s()+.-]{10,}/;
+    
+    const emailMatch = message.match(emailRegex) || assistantMessage.match(emailRegex);
+    const phoneMatch = message.match(phoneRegex) || assistantMessage.match(phoneRegex);
+
+    // Check if lead already exists for this conversation
+    const { data: existingLead } = await supabase
+      .from('leads')
+      .select('id')
+      .eq('conversation_id', convId)
+      .single();
+
+    if ((emailMatch || phoneMatch) && !existingLead) {
+      // Create new lead
+      await supabase.from('leads').insert({
+        conversation_id: convId,
+        name: visitorName || 'Unknown',
+        email: emailMatch ? emailMatch[0] : null,
+        phone: phoneMatch ? phoneMatch[0].trim() : null,
+        interest: history && history.length > 3 ? 'Engaged in conversation' : null,
+        status: 'new'
+      });
+    } else if ((emailMatch || phoneMatch) && existingLead) {
+      // Update existing lead with new information
+      await supabase.from('leads')
+        .update({
+          email: emailMatch ? emailMatch[0] : undefined,
+          phone: phoneMatch ? phoneMatch[0].trim() : undefined,
+        })
+        .eq('id', existingLead.id);
+    }
+
     // Recommend products based on conversation
     const recommendedProducts = products?.slice(0, 3) || [];
 

@@ -86,9 +86,12 @@ export type Database = {
           email: string | null
           id: string
           interest: string | null
+          last_score_update: string | null
+          lead_score: number | null
           name: string
           notes: string | null
           phone: string | null
+          score_category: string | null
           status: string | null
           updated_at: string | null
         }
@@ -98,9 +101,12 @@ export type Database = {
           email?: string | null
           id?: string
           interest?: string | null
+          last_score_update?: string | null
+          lead_score?: number | null
           name: string
           notes?: string | null
           phone?: string | null
+          score_category?: string | null
           status?: string | null
           updated_at?: string | null
         }
@@ -110,9 +116,12 @@ export type Database = {
           email?: string | null
           id?: string
           interest?: string | null
+          last_score_update?: string | null
+          lead_score?: number | null
           name?: string
           notes?: string | null
           phone?: string | null
+          score_category?: string | null
           status?: string | null
           updated_at?: string | null
         }
@@ -196,7 +205,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      calculate_lead_score: {
+        Args: { p_conversation_id: string }
+        Returns: number
+      }
     }
     Enums: {
       [_ in never]: never
